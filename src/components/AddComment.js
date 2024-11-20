@@ -23,8 +23,9 @@ const AddComment = ({ postId }) => {
         onChange={(e) => setCommentText(e.target.value)}
         placeholder="Ajoutez un commentaire"
         required
+         className="w-full border rounded p-2 outline-none focus:shadow-outline"
       />
-      <button type="submit">Ajouter un commentaire</button>
+      <button className="bg-blue-500 hover:bg-blue-700 text-white uppercase text-sm font-semibold px-4 py-2 rounded" type="submit">Ajouter un commentaire</button>
     </form>
   );
 };

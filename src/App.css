@@ -1,6 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 .clair{
   background-color: white;
+
 }
 .dark{
   background-color: rgb(69, 67, 67);
+ 
+}
+.clair .form-auth{
+  background-color: white;
+  color: rgb(123, 123, 123);
+}
+.dark .form-auth{
+  background-color: rgb(69, 67, 67);
+  color: black;
 }

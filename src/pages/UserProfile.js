@@ -1,8 +1,8 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 import { auth, db } from "../firebase";
-
 const UserProfile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -36,7 +36,7 @@ const UserProfile = () => {
         setGithub(data.github || "");
         setLinkedin(data.linkedin || "");
       } else {
-        console.log("Aucun profil trouvé.");
+        toast.error("ucun profil trouvé."); 
       }
     };
 
@@ -61,50 +61,75 @@ const UserProfile = () => {
     });
 
     setEditMode(false);
-    alert("Profil mis à jour !");
+    toast.error("Profil mis à jour !"); 
   };
 
   return (
-    <div>
-      <h1>Profil utilisateur</h1>
-      <div>
+ <>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Profil de l'utilisateur</h1>
+      
+      {/* Menu de navigation */}
+      <nav className="mb-6">
+        <ul className="flex space-x-4">
+          <li>
+            <Link to="/posts" className="text-blue-500 hover:underline">
+              Voir les publications
+            </Link>
+          </li>
+          <li>
+            <Link to="/publish" className="text-blue-500 hover:underline">
+              Ajouter une publication
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      </div>
+    <div className="flex items-center w-full">
+    <div className="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
+      <h1 className="mb-2">Mon Espace</h1>
         <img
           src={user.photoURL || "https://via.placeholder.com/150"}
           alt="Avatar"
           width={150}
         />
-        <h2>{auth.currentUser?.email}</h2>
+        <h2 className="mb-2">{auth.currentUser?.email}</h2>
         {editMode ? (
           <>
             <textarea
               placeholder="Bio"
               value={bio}
               onChange={(e) => setBio(e.target.value)}
+              className="w-full border rounded p-2 outline-none focus:shadow-outline mb-2"
             />
             <input
               type="text"
               placeholder="Compétences (séparées par des virgules)"
               value={skills}
               onChange={(e) => setSkills(e.target.value)}
+              className="w-full border rounded p-2 outline-none focus:shadow-outline mb-2"
             />
             <textarea
               placeholder="Projets"
               value={projects}
               onChange={(e) => setProjects(e.target.value)}
+              className="w-full border rounded p-2 outline-none focus:shadow-outline mb-2"
             />
             <input
               type="url"
               placeholder="GitHub"
               value={github}
               onChange={(e) => setGithub(e.target.value)}
+              className="w-full border rounded p-2 outline-none focus:shadow-outline mb-2"
             />
             <input
               type="url"
               placeholder="LinkedIn"
               value={linkedin}
               onChange={(e) => setLinkedin(e.target.value)}
+              className="w-full border rounded p-2 outline-none focus:shadow-outline mb-2"
             />
-            <button onClick={handleSave}>Enregistrer</button>
+            <button  className="bg-blue-500 hover:bg-blue-700 text-white uppercase text-sm font-semibold px-4 py-2 rounded" onClick={handleSave}>Enregistrer</button>
           </>
         ) : (
           <>
@@ -121,11 +146,12 @@ const UserProfile = () => {
                 LinkedIn
               </a>
             </p>
-            <button onClick={() => setEditMode(true)}>Modifier</button>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white uppercase text-sm font-semibold px-4 py-2 rounded" onClick={() => setEditMode(true)}>Modifier</button>
           </>
         )}
       </div>
     </div>
+    </>
   );
 };
 
